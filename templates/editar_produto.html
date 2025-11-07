@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Editar Produto{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded shadow">
+  <h1 class="text-xl font-bold mb-4">Editar Produto</h1>
+  <form method="POST">
+    <input name="nome" value="{{ produto.nome }}" class="w-full border p-2 mb-3" required>
+    <input type="number" name="quantidade" value="{{ produto.quantidade }}" class="w-full border p-2 mb-3" required>
+    <input type="number" name="estoque_minimo" value="{{ produto.estoque_minimo }}" class="w-full border p-2 mb-3" required>
+    <button class="bg-green-600 text-white p-2 rounded w-full">Salvar</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Cadastro{% endblock %}
+{% block content %}
+<div class="max-w-sm mx-auto bg-white p-6 rounded shadow">
+  <h1 class="text-2xl mb-4 text-center font-bold">Cadastro</h1>
+  <form method="POST">
+    <input type="text" name="nome" placeholder="Nome" class="w-full border p-2 mb-3" required>
+    <input type="email" name="email" placeholder="Email" class="w-full border p-2 mb-3" required>
+    <input type="password" name="senha" placeholder="Senha" class="w-full border p-2 mb-3" required>
+    <button class="w-full bg-green-600 text-white p-2 rounded">Criar Conta</button>
+  </form>
+  <p class="text-sm text-center mt-4">Já tem conta? <a href="{{ url_for('login') }}" class="text-blue-600">Entrar</a></p>
+</div>
+{% endblock %}

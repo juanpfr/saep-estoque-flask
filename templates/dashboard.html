@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-4">
+  <h1 class="text-2xl font-bold">Meus Produtos</h1>
+  <a href="{{ url_for('logout') }}" class="text-red-600">Sair</a>
+</div>
+
+<form method="POST" action="{{ url_for('add_produto') }}" class="bg-white p-4 rounded shadow mb-4">
+  <div class="grid grid-cols-3 gap-2">
+    <input name="nome" placeholder="Nome" class="border p-2" required>
+    <input type="number" name="quantidade" placeholder="Qtd" class="border p-2" required>
+    <input type="number" name="estoque_minimo" placeholder="Mínimo" class="border p-2" required>
+  </div>
+  <button class="mt-3 bg-blue-600 text-white p-2 rounded w-full">Adicionar Produto</button>
+</form>
+
+<table class="w-full bg-white rounded shadow">
+  <tr class="bg-gray-200">
+    <th class="p-2 text-left">Nome</th>
+    <th class="p-2">Qtd</th>
+    <th class="p-2">Mínimo</th>
+    <th class="p-2">Ações</th>
+  </tr>
+  {% for p in produtos %}
+  <tr class="{% if p.quantidade < p.estoque_minimo %}bg-red-100{% endif %}">
+    <td class="p-2">{{ p.nome }}</td>
+    <td class="p-2 text-center">{{ p.quantidade }}</td>
+    <td class="p-2 text-center">{{ p.estoque_minimo }}</td>
+    <td class="p-2 text-center">
+      <a href="{{ url_for('editar', id=p.id) }}" class="text-blue-600">Editar</a> |
+      <a href="{{ url_for('deletar', id=p.id) }}" class="text-red-600">Excluir</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
