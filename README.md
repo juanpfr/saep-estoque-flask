@@ -31,6 +31,7 @@ O objetivo é oferecer uma **solução web simples, funcional e responsiva**, ga
 
 ## 🧱 Comandos SQL_Postgree
 Tabela 1: 
+
 INSERT INTO usuario (nome, email, senha) VALUES
 ('Carlos Silva', 'carlos@fabrica.com', '123456'),
 ('Ana Oliveira', 'ana@fabrica.com', '123456'),
