@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Movimentar Produto{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded shadow">
+  <h1 class="text-xl font-bold mb-4">Movimentar: {{ produto.nome }}</h1>
+  <form method="POST">
+    <select name="tipo" class="w-full border p-2 mb-3" required>
+      <option value="">Selecione o tipo</option>
+      <option value="entrada">Entrada</option>
+      <option value="saida">Saída</option>
+    </select>
+    <input type="number" name="quantidade" placeholder="Quantidade" class="w-full border p-2 mb-3" required>
+    <button class="bg-blue-600 text-white p-2 rounded w-full">Registrar</button>
+  </form>
+</div>
+{% endblock %}

@@ -4,8 +4,11 @@
 <div class="max-w-md mx-auto bg-white p-6 rounded shadow">
   <h1 class="text-xl font-bold mb-4">Editar Produto</h1>
   <form method="POST">
+    <label for="nome">Nome:</label>
     <input name="nome" value="{{ produto.nome }}" class="w-full border p-2 mb-3" required>
+    <label for="quantidade">Quantidade:</label>
     <input type="number" name="quantidade" value="{{ produto.quantidade }}" class="w-full border p-2 mb-3" required>
+    <label for="estoque_minimo">Estoque mínimo:</label>
     <input type="number" name="estoque_minimo" value="{{ produto.estoque_minimo }}" class="w-full border p-2 mb-3" required>
     <button class="bg-green-600 text-white p-2 rounded w-full">Salvar</button>
   </form>

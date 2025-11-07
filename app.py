@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, Usuario, Produto, Movimentacao
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'chave_secreta_simples'
@@ -17,10 +18,12 @@ login_manager.init_app(app)
 def load_user(user_id):
     return Usuario.query.get(int(user_id))
 
+# 🔥 Cria tabelas se ainda não existirem
 with app.app_context():
     db.create_all()
 
-# Rota principal (login)
+# ----------------- ROTAS -----------------
+
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -53,7 +56,8 @@ def register():
 @login_required
 def dashboard():
     produtos = Produto.query.filter_by(usuario_id=current_user.id).all()
-    return render_template('dashboard.html', produtos=produtos)
+    movimentacoes = Movimentacao.query.filter_by(usuario_id=current_user.id).order_by(Movimentacao.data.desc()).limit(10).all()
+    return render_template('dashboard.html', produtos=produtos, movimentacoes=movimentacoes)
 
 @app.route('/add_produto', methods=['POST'])
 @login_required
@@ -88,6 +92,28 @@ def deletar(id):
     db.session.commit()
     flash('Produto removido.')
     return redirect(url_for('dashboard'))
+
+# registrar entrada ou saída
+@app.route('/movimentar/<int:id>', methods=['GET', 'POST'])
+@login_required
+def movimentar(id):
+    produto = Produto.query.get_or_404(id)
+    if request.method == 'POST':
+        tipo = request.form['tipo']
+        quantidade = int(request.form['quantidade'])
+        if tipo == 'entrada':
+            produto.quantidade += quantidade
+        elif tipo == 'saida':
+            if produto.quantidade < quantidade:
+                flash('Quantidade insuficiente em estoque!')
+                return redirect(url_for('movimentar', id=id))
+            produto.quantidade -= quantidade
+        mov = Movimentacao(tipo=tipo, quantidade=quantidade, produto_id=id, usuario_id=current_user.id)
+        db.session.add(mov)
+        db.session.commit()
+        flash(f'Movimentação registrada ({tipo})!')
+        return redirect(url_for('dashboard'))
+    return render_template('movimentar.html', produto=produto)
 
 @app.route('/logout')
 @login_required
