@@ -35,7 +35,7 @@ O objetivo é oferecer uma **solução web simples, funcional e responsiva**, ga
 
 ```bash
 # Clone o repositório
-git clone https://github.com/juanpfr/simulado-pratico-saep-I/
+git clone https://github.com/juanpfr/saep-estoque-flask/
 
 # Acesse a pasta do projeto
 cd saep-estoque-flask
